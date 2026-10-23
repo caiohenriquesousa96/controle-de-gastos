@@ -67,6 +67,7 @@ function mostrarGastos() {
 
     mensagemVazia.hidden = gastos.length > 0;
   calcularTotal();
+  calcularTotaisPorCategoria();
 }
 
 mostrarGastos();
@@ -91,4 +92,24 @@ function calcularTotal() {
   }, 0);
 
   totalGeral.textContent = formatarMoeda(total);
+}
+
+function calcularTotaisPorCategoria() {
+  const totais = {};
+
+  gastos.forEach(function (gasto) {
+    totais[gasto.categoria] = (totais[gasto.categoria] || 0) + gasto.valor;
+  });
+
+    totaisCategoria.innerHTML = '';
+
+  Object.keys(totais).forEach(function (categoria) {
+    const chip = document.createElement('div');
+    chip.classList.add('chip');
+    chip.innerHTML = `
+      <span>${categoria}</span>
+      <strong>${formatarMoeda(totais[categoria])}</strong>
+    `;
+    totaisCategoria.appendChild(chip);
+  });
 }
