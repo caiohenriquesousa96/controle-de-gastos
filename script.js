@@ -51,7 +51,13 @@ form.addEventListener('submit', function (evento) {
 function mostrarGastos() {
   listaGastos.innerHTML = '';
 
-  gastos.forEach(function (gasto) {
+  const categoriaEscolhida = filtroCategoria.value;
+
+const gastosFiltrados = gastos.filter(function (gasto) {
+  return categoriaEscolhida === 'todas' || gasto.categoria === categoriaEscolhida;
+});
+
+  gastosFiltrados.forEach(function (gasto) {
     const li = document.createElement('li');
     li.classList.add('gasto');
     li.innerHTML = `
@@ -65,7 +71,7 @@ function mostrarGastos() {
     listaGastos.appendChild(li);
   });
 
-    mensagemVazia.hidden = gastos.length > 0;
+    mensagemVazia.hidden = gastosFiltrados.length > 0;
   calcularTotal();
   calcularTotaisPorCategoria();
 }
@@ -78,6 +84,8 @@ function removerGasto(id) {
   });
   mostrarGastos();
 }
+
+filtroCategoria.addEventListener('change', mostrarGastos);
 
 listaGastos.addEventListener('click', function (evento) {
   if (evento.target.classList.contains('btn-remover')) {
