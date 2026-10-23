@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controle de Gastos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+
+    <!-- TOPO -->
+    <header class="topo">
+      <h1>Controle de Gastos</h1>
+      <p>Anote seus gastos e veja para onde o dinheiro está indo.</p>
+    </header>
+
+    <!-- RESUMO: total geral e total por categoria -->
+    <section class="resumo">
+      <div class="resumo-card">
+        <span class="resumo-label">Total geral</span>
+        <strong id="total-geral">R$ 0,00</strong>
+      </div>
+
+      <div id="totais-categoria" class="totais-categoria">
+        <!-- O JavaScript vai criar um "chip" para cada categoria, assim:
+        <div class="chip">
+          <span>Comida</span>
+          <strong>R$ 25,00</strong>
+        </div>
+        -->
+      </div>
+    </section>
+
+    <!-- FORMULÁRIO: novo gasto -->
+    <section class="card">
+      <h2>Novo gasto</h2>
+      <form id="form-gasto" class="form-gasto">
+        <div class="campo campo-descricao">
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" placeholder="Ex.: Almoço" required>
+        </div>
+
+        <div class="campo">
+          <label for="valor">Valor (R$)</label>
+          <input type="number" id="valor" min="0.01" step="0.01" placeholder="0,00" required>
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <select id="categoria" required>
+            <option value="Comida">Comida</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Moradia">Moradia</option>
+            <option value="Saúde">Saúde</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn">Adicionar gasto</button>
+      </form>
+    </section>
+
+    <!-- LISTA DE GASTOS -->
+    <section class="card">
+      <div class="lista-topo">
+        <h2>Meus gastos</h2>
+        <select id="filtro-categoria" aria-label="Filtrar por categoria">
+          <option value="todas">Todas as categorias</option>
+          <option value="Comida">Comida</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Moradia">Moradia</option>
+          <option value="Saúde">Saúde</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+
+      <ul id="lista-gastos" class="lista-gastos">
+        <!-- O JavaScript vai criar um <li> para cada gasto, assim:
+        <li class="gasto">
+          <div class="gasto-info">
+            <strong>Almoço</strong>
+            <span class="gasto-categoria">Comida</span>
+          </div>
+          <span class="gasto-valor">R$ 25,00</span>
+          <button class="btn-remover" aria-label="Remover gasto">✕</button>
+        </li>
+        -->
+        <!-- EXEMPLO VISUAL: apague este item quando o JavaScript estiver pronto -->
+        <li class="gasto">
+          <div class="gasto-info">
+            <strong>Almoço</strong>
+            <span class="gasto-categoria">Comida</span>
+          </div>
+          <span class="gasto-valor">R$ 25,00</span>
+          <button class="btn-remover" aria-label="Remover gasto">✕</button>
+        </li>
+      </ul>
+
+      <!-- Aparece só quando não há gastos. O atributo "hidden" esconde o elemento;
+           o JavaScript vai ligar e desligar isso. -->
+      <p id="mensagem-vazia" class="mensagem-vazia" hidden>Nenhum gasto por aqui ainda.</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

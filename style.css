@@ -1,0 +1,258 @@
+/* ==========================================
+   CORES DO PROJETO
+   Para mudar o visual, troque aqui, em um lugar só.
+   ========================================== */
+:root {
+  --fundo: #0b0c10;
+  --card: #1a1c23;
+  --campo: #12141a;
+  --borda: #2a2d37;
+  --destaque: #d90429;
+  --texto: #ffffff;
+  --texto-suave: #9ca3af;
+}
+
+/* ==========================================
+   RESET E BASE
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--fundo);
+  color: var(--texto);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+/* ==========================================
+   TOPO
+   ========================================== */
+.topo {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.topo h1 {
+  font-size: 1.9rem;
+}
+
+.topo p {
+  color: var(--texto-suave);
+}
+
+/* ==========================================
+   RESUMO (TOTAIS)
+   ========================================== */
+.resumo {
+  margin-bottom: 24px;
+}
+
+.resumo-card {
+  background-color: var(--card);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--destaque);
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.resumo-label {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+.resumo-card strong {
+  font-size: 2rem;
+}
+
+.totais-categoria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background-color: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: flex;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.chip span {
+  color: var(--texto-suave);
+}
+
+/* ==========================================
+   CARDS (FORMULÁRIO E LISTA)
+   ========================================== */
+.card {
+  background-color: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+}
+
+/* ==========================================
+   FORMULÁRIO
+   ========================================== */
+.form-gasto {
+  display: grid;
+  gap: 14px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+input,
+select {
+  background-color: var(--campo);
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  color: var(--texto);
+  font-size: 1rem;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--destaque);
+}
+
+.btn {
+  background-color: var(--destaque);
+  border: none;
+  border-radius: 8px;
+  color: var(--texto);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   LISTA DE GASTOS
+   ========================================== */
+.lista-topo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.lista-topo h2 {
+  margin-bottom: 0;
+}
+
+.lista-gastos {
+  list-style: none;
+}
+
+.gasto {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--borda);
+}
+
+.gasto:last-child {
+  border-bottom: none;
+}
+
+.gasto-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gasto-categoria {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}
+
+.gasto-valor {
+  font-weight: 700;
+}
+
+.btn-remover {
+  background: none;
+  border: none;
+  color: var(--texto-suave);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 6px;
+  transition: color 0.2s ease;
+}
+
+.btn-remover:hover {
+  color: var(--destaque);
+}
+
+.mensagem-vazia {
+  color: var(--texto-suave);
+  padding: 20px 0 6px;
+  text-align: center;
+}
+
+/* ==========================================
+   TELAS MAIORES (computador)
+   Fica no FIM do arquivo de propósito: regras de media query
+   devem vir depois das regras base, senão perdem a disputa.
+   ========================================== */
+@media (min-width: 600px) {
+  .form-gasto {
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: end;
+  }
+
+  .form-gasto .btn {
+    grid-column: 1 / -1;
+  }
+
+  .lista-topo {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .lista-topo select {
+    width: auto;
+  }
+}
