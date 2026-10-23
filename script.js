@@ -65,7 +65,8 @@ function mostrarGastos() {
     listaGastos.appendChild(li);
   });
 
-  mensagemVazia.hidden = gastos.length > 0;
+    mensagemVazia.hidden = gastos.length > 0;
+  calcularTotal();
 }
 
 mostrarGastos();
@@ -83,47 +84,11 @@ listaGastos.addEventListener('click', function (evento) {
     removerGasto(id);
   }
 });
-// ==========================================================
-// ETAPA 2 (comece por aqui): adicionar um gasto e ver na lista
-// ==========================================================
 
-// PASSO 3: TODO - escutar o envio do formulário.
-//   Dica: form.addEventListener('submit', function (evento) { ... });
-//   Dentro da função:
-//     a) evento.preventDefault();  (impede a página de recarregar)
-//     b) pegue os valores dos campos (inputDescricao.value, etc.)
-//        Atenção: o valor vem como texto. Use Number(...) para virar número.
-//     c) crie o objeto do gasto (para o id, pode usar Date.now())
-//     d) gastos.push(novoGasto);
-//     e) limpe o formulário: form.reset();
-//     f) chame mostrarGastos();
+function calcularTotal() {
+  const total = gastos.reduce(function (soma, gasto) {
+    return soma + gasto.valor;
+  }, 0);
 
-
-// PASSO 4: TODO - criar a função mostrarGastos().
-//   Ela deve:
-//     a) limpar a lista: listaGastos.innerHTML = '';
-//     b) para cada gasto, criar um <li> igual ao exemplo comentado no HTML
-//        Dicas: gastos.forEach(...), document.createElement('li'),
-//               li.classList.add('gasto'), li.innerHTML = `...`,
-//               listaGastos.appendChild(li)
-//     c) mostrar a mensagem "Nenhum gasto" só quando a lista estiver vazia:
-//        mensagemVazia.hidden = gastos.length > 0;
-//   Depois de escrever, chame mostrarGastos() uma vez no fim do arquivo.
-
-
-// ==========================================================
-// ETAPAS SEGUINTES (só depois que a Etapa 2 funcionar)
-// ==========================================================
-
-// PASSO 5: TODO - remover um gasto (botão ✕).
-//   Dica: gastos = gastos.filter(...) mantendo só os gastos com id diferente.
-
-// PASSO 6: TODO - total geral e total por categoria.
-//   Dica: gastos.reduce(...). Mostre com formatarMoeda().
-
-// PASSO 7: TODO - filtro por categoria (select "filtro-categoria").
-//   Dica: evento 'change' + mostrar só os gastos da categoria escolhida.
-
-// PASSO 8: TODO - salvar e carregar com localStorage.
-//   Dica: localStorage.setItem('gastos', JSON.stringify(gastos))
-//         JSON.parse(localStorage.getItem('gastos')) || []
+  totalGeral.textContent = formatarMoeda(total);
+}
