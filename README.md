@@ -4,7 +4,7 @@ Aplicação web simples para anotar gastos, ver o total e acompanhar quanto foi 
 
 **Veja funcionando:** [caiohenriquesousa96.github.io/controle-de-gastos](https://caiohenriquesousa96.github.io/controle-de-gastos/)
 
-![Prévia do controle de Gastos](imagens/Screenshot_13.png)   
+![Prévia do controle de Gastos](Screenshot_13.png)   
 
 ## Funcionalidades
 
