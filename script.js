@@ -24,7 +24,7 @@ const filtroCategoria = document.getElementById('filtro-categoria');
 // Cada gasto vai ter esta forma:
 // { id: 1, descricao: 'Almoço', valor: 25.5, categoria: 'Comida' }
 // ----------------------------------------------------------
-let gastos = [];
+let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
 
 // Função pronta: transforma 25.5 em "R$ 25,50".
 function formatarMoeda(valor) {
@@ -44,6 +44,7 @@ form.addEventListener('submit', function (evento) {
     categoria: selectCategoria.value
   };
   gastos.push(novoGasto);
+  salvarGastos();
   form.reset();
   mostrarGastos();
 });
@@ -72,7 +73,7 @@ const gastosFiltrados = gastos.filter(function (gasto) {
   });
 
     mensagemVazia.hidden = gastosFiltrados.length > 0;
-  calcularTotal();
+  calcularTotal(gastosFiltrados);
   calcularTotaisPorCategoria();
 }
 
@@ -82,6 +83,7 @@ function removerGasto(id) {
   gastos = gastos.filter(function (gasto) {
     return gasto.id !== id;
   });
+  salvarGastos();
   mostrarGastos();
 }
 
@@ -94,8 +96,8 @@ listaGastos.addEventListener('click', function (evento) {
   }
 });
 
-function calcularTotal() {
-  const total = gastos.reduce(function (soma, gasto) {
+function calcularTotal(lista) {
+  const total = lista.reduce(function (soma, gasto) {
     return soma + gasto.valor;
   }, 0);
 
@@ -121,3 +123,7 @@ function calcularTotaisPorCategoria() {
     totaisCategoria.appendChild(chip);
   });
 }
+
+function salvarGastos() {
+  localStorage.setItem('gastos', JSON.stringify(gastos));
+} 
