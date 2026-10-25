@@ -1,13 +1,4 @@
-// ==========================================================
-// CONTROLE DE GASTOS - script.js
-// Agora é com você! Siga os passos na ordem e teste a cada um.
-// Dica: abra o console do navegador (F12) para ver erros e testar.
-// ==========================================================
 
-// ----------------------------------------------------------
-// PASSO 1: PEGAR OS ELEMENTOS DA PÁGINA
-// (já feito para você ver o padrão: document.getElementById("id"))
-// ----------------------------------------------------------
 const form = document.getElementById('form-gasto');
 const inputDescricao = document.getElementById('descricao');
 const inputValor = document.getElementById('valor');
@@ -18,15 +9,8 @@ const totalGeral = document.getElementById('total-geral');
 const totaisCategoria = document.getElementById('totais-categoria');
 const filtroCategoria = document.getElementById('filtro-categoria');
 
-// ----------------------------------------------------------
-// PASSO 2: OS DADOS
-// Os gastos ficam numa lista (array) de objetos.
-// Cada gasto vai ter esta forma:
-// { id: 1, descricao: 'Almoço', valor: 25.5, categoria: 'Comida' }
-// ----------------------------------------------------------
 let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
 
-// Função pronta: transforma 25.5 em "R$ 25,50".
 function formatarMoeda(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
@@ -62,13 +46,18 @@ const gastosFiltrados = gastos.filter(function (gasto) {
     const li = document.createElement('li');
     li.classList.add('gasto');
     li.innerHTML = `
-  <div class="gasto-info">
-    <strong>${gasto.descricao}</strong>
-    <span class="gasto-categoria">${gasto.categoria}</span>
-  </div>
-  <span class="gasto-valor">${formatarMoeda(gasto.valor)}</span>
-  <button class="btn-remover" data-id="${gasto.id}" aria-label="Remover gasto">✕</button>
-`;
+      <div class="gasto-info">
+        <strong></strong>
+        <span class="gasto-categoria"></span>
+      </div>
+      <span class="gasto-valor"></span>
+      <button class="btn-remover" aria-label="Remover gasto">✕</button>
+    `;
+
+    li.querySelector('strong').textContent = gasto.descricao;
+    li.querySelector('.gasto-categoria').textContent = gasto.categoria;
+    li.querySelector('.gasto-valor').textContent = formatarMoeda(gasto.valor);
+    li.querySelector('.btn-remover').dataset.id = gasto.id;
     listaGastos.appendChild(li);
   });
 

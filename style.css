@@ -1,6 +1,5 @@
 /* ==========================================
    CORES DO PROJETO
-   Para mudar o visual, troque aqui, em um lugar só.
    ========================================== */
 :root {
   --fundo: #0b0c10;
@@ -233,8 +232,6 @@ select:focus {
 
 /* ==========================================
    TELAS MAIORES (computador)
-   Fica no FIM do arquivo de propósito: regras de media query
-   devem vir depois das regras base, senão perdem a disputa.
    ========================================== */
 @media (min-width: 600px) {
   .form-gasto {
