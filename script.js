@@ -9,7 +9,22 @@ const totalGeral = document.getElementById('total-geral');
 const totaisCategoria = document.getElementById('totais-categoria');
 const filtroCategoria = document.getElementById('filtro-categoria');
 
-let gastos = JSON.parse(localStorage.getItem('gastos')) || [];
+let gastos = [];
+
+try {
+  const dadosSalvos = localStorage.getItem('gastos');
+  if (dadosSalvos) {
+    const parsed = JSON.parse(dadosSalvos);
+    if (Array.isArray(parsed)) {
+      gastos = parsed;
+    } else {
+      console.warn('Dados do localStorage não são um array. Iniciando com lista vazia para segurança.');
+    }
+  }
+} catch (error) {
+  console.error('Erro ao ler gastos do localStorage:', error);
+  alert('Houve um problema ao carregar seus dados salvos. Iniciando com uma lista vazia.');
+}
 
 function formatarMoeda(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -17,18 +32,26 @@ function formatarMoeda(valor) {
 
 form.addEventListener('submit', function (evento) {
   evento.preventDefault();
-  console.log('formulário enviado!');
-  console.log(inputDescricao.value);
-  console.log(inputValor.value);
-  console.log(selectCategoria.value);
+  const valorGasto = Number(inputValor.value);
+
+  if (isNaN(valorGasto) || valorGasto <= 0 || !isFinite(valorGasto)) {
+    alert('Por favor, insira um valor válido maior que zero.');
+    return;
+  }
+
   const novoGasto = {
     id: Date.now(),
-    descricao: inputDescricao.value,
-    valor: Number(inputValor.value),
+    descricao: inputDescricao.value.trim(),
+    valor: valorGasto,
     categoria: selectCategoria.value
   };
   gastos.push(novoGasto);
-  salvarGastos();
+  const salvou = salvarGastos();
+  if (!salvou) {
+    gastos.pop();
+    return;
+  }
+
   form.reset();
   mostrarGastos();
 });
@@ -63,16 +86,23 @@ const gastosFiltrados = gastos.filter(function (gasto) {
 
     mensagemVazia.hidden = gastosFiltrados.length > 0;
   calcularTotal(gastosFiltrados);
-  calcularTotaisPorCategoria();
+  calcularTotaisPorCategoria(gastosFiltrados);
 }
 
 mostrarGastos();
 
 function removerGasto(id) {
+  const gastosAnteriores = [...gastos];
   gastos = gastos.filter(function (gasto) {
     return gasto.id !== id;
   });
-  salvarGastos();
+
+  const salvou = salvarGastos();
+  if (!salvou) {
+    gastos = gastosAnteriores;
+    return;
+  }
+
   mostrarGastos();
 }
 
@@ -93,10 +123,10 @@ function calcularTotal(lista) {
   totalGeral.textContent = formatarMoeda(total);
 }
 
-function calcularTotaisPorCategoria() {
+function calcularTotaisPorCategoria(lista) {
   const totais = {};
 
-  gastos.forEach(function (gasto) {
+  lista.forEach(function (gasto) {
     totais[gasto.categoria] = (totais[gasto.categoria] || 0) + gasto.valor;
   });
 
@@ -114,5 +144,12 @@ function calcularTotaisPorCategoria() {
 }
 
 function salvarGastos() {
-  localStorage.setItem('gastos', JSON.stringify(gastos));
+  try {
+    localStorage.setItem('gastos', JSON.stringify(gastos));
+    return true;
+  } catch (error) {
+    console.error('Erro ao salvar no localStorage:', error);
+    alert('Não foi possível salvar a alteração. O armazenamento pode estar cheio ou desativado.');
+    return false;
+  }
 } 
